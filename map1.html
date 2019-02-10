@@ -1,7 +1,6 @@
-
 <!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"/>
 
-<title>地図</title>
+<title>バスマップ</title>
 
 <link rel="apple-touch-icon" href="app-icon.png"/>
 <meta property="og:image" content="ogp-image.jpg"/>
@@ -13,64 +12,26 @@
 <script src="https://code4fukui.github.io/egmapjs/sparql.js"></script>
 <script>"use strict"
 
+
 window.onload = function() {
 	var map = initMap('mapid')
 	map.setZoom(16)
-	map.panTo([ 35.943560,136.188917 ]) // 鯖江駅
-	map.addIcon(35.943560,136.188917, "鯖江駅")
-	map.addIcon(35.944571, 136.186228, "Hana道場", "icon-megane.png", 64)
-	// SPARQLクエリー
-
-	var query = `
-
-		prefix ic: <http://imi.go.jp/ns/core/rdf#>
-
-prefix xsd: <http://www.w3.org/2001/XMLSchema#>
-
-
-
-		select ?uri ?name ?lat ?lng {
-
-			?uri ic:名称 [ ic:表記 ?name ].
-
-			?uri ic:地理座標 [ ic:緯度 ?lat; ic:経度 ?lng; ].
-
-			filter(contains(str(?name),'鯖江'))
-
-		} limit 100
-
-	`
-
-
-
-	querySPARQL(query, function(data) {
-
-		var items = data.results.bindings;
-
-		for (var i = 0; i < items.length; i++) {
-
-			var item = items[i];
-
-			var lat = item.lat.value;
-
-			var lng = item.lng.value;
-
-			var name = item.name.value;
-
-			map.addIcon(lat, lng, name)
-
-		}
+	map.panTo([ 36.06165,136.223546 ]) // 福井駅
+	
+	map.addIcon(36.062263,136.222962,"福井駅")
+	map.addIcon(36.062782,136.216431,"東映前")
+	map.addIcon(36.063251,136.21402,"片町入口")
 }
-
 </script>
 <style>
 
 body { margin: 0; font-family: sans-serif; text-align: center; }
 h1 { font-size: 5vw; margin: 0; }
 #mapid { height: 60vh; }
+
 </style></head><body>
 
-<h1>地図</h1>
+<h1>バスマップ</h1>
 <div id="mapid"></div>
 
 </body></html>
